@@ -1,0 +1,66 @@
+name: angelina_app
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.5.3
+  flutter_screenutil: ^5.9.3
+  pretty_dio_logger: ^1.4.0
+  dio: ^5.8.0+1
+  flutter_bloc: ^9.1.0
+  equatable: ^2.0.7
+  flutter_svg: ^2.1.0
+  cached_network_image: ^3.4.1
+  flutter_html: ^3.0.0
+  html: ^0.15.6
+  dropdown_button2: ^2.3.9
+  webview_flutter: ^4.11.0
+  bloc: ^9.0.0
+  carousel_slider: ^5.0.0
+  shimmer: ^3.0.0
+  lottie: ^3.3.1
+  badges: ^3.1.2
+  flutter_local_notifications: ^19.1.0
+  permission_handler: ^12.0.0+1
+  intl: ^0.20.2
+  image_picker: ^1.1.2
+  path_provider: ^2.1.5
+  timezone: ^0.10.1
+  flutter_launcher_icons: ^0.14.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/logo.png"
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/lottie/Animation - 1746358977110.json
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto/static/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Roboto/static/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Roboto/static/Roboto-SemiBold.ttf
+          weight: 600
