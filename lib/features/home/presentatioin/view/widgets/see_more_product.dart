@@ -29,82 +29,84 @@ class SeeMoreProduct extends StatelessWidget {
         builder: (context) {
           return Scaffold(
             body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                child: Column(
-                  children: [
-                    SizedBox(height: 40.h),
-                    const AppAppBar(title: 'جميع المنتجات'),
+              child: SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
+                  child: Column(
+                    children: [
+                      const AppAppBar(title: 'جميع المنتجات'),
+                      SizedBox(height: 10.h),
 
-                    BlocBuilder<ProductCubit, ProductState>(
-                      builder: (context, state) {
-                        if (state is ProductLoading &&
-                            !(state is ProductSuccess)) {
-                          return const Center(child: ShimmerGridLoader());
-                        } else if (state is ProductSuccess) {
-                          return Column(
-                            children: [
-                              GridView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      mainAxisSpacing: 10.h,
-                                      crossAxisSpacing: 10.w,
-                                      childAspectRatio: 159 / 304,
-                                    ),
-                                itemCount: state.products.length,
-                                itemBuilder: (context, index) {
-                                  final product = state.products[index];
-                                  return ProductContainer(
-                                    imageUrl:
-                                        product.imageUrls.isNotEmpty
-                                            ? product.imageUrls.first
-                                            : '',
-                                    name: product.name,
-                                    category:
-                                        product.categories.isNotEmpty
-                                            ? product.categories.first
-                                            : '',
-                                    price: product.price,
-                                    onTap: () {
-                                      RouteUtils.push(
-                                        ProductDetailsView(product: product),
-                                      );
-                                    },
-                                    product: product,
-                                  );
-                                },
-                              ),
-                              if (state.hasMore)
-                                Padding(
-                                  padding: EdgeInsets.only(bottom: 20.h),
-                                  child:
-                                      state.isLoadingMore
-                                          ? const Center(
-                                            child: AppLoadingIndicator(),
-                                          )
-                                          : AppButton(
-                                            btnText: 'عرض المزيد',
-                                            width: 250.w,
-                                            onTap: () {
-                                              context
-                                                  .read<ProductCubit>()
-                                                  .loadMoreProducts();
-                                            },
-                                          ),
+                      BlocBuilder<ProductCubit, ProductState>(
+                        builder: (context, state) {
+                          if (state is ProductLoading &&
+                              !(state is ProductSuccess)) {
+                            return const Center(child: ShimmerGridLoader());
+                          } else if (state is ProductSuccess) {
+                            return Column(
+                              children: [
+                                GridView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        mainAxisSpacing: 10.h,
+                                        crossAxisSpacing: 10.w,
+                                        childAspectRatio: 159 / 304,
+                                      ),
+                                  itemCount: state.products.length,
+                                  itemBuilder: (context, index) {
+                                    final product = state.products[index];
+                                    return ProductContainer(
+                                      imageUrl:
+                                          product.imageUrls.isNotEmpty
+                                              ? product.imageUrls.first
+                                              : '',
+                                      name: product.name,
+                                      category:
+                                          product.categories.isNotEmpty
+                                              ? product.categories.first
+                                              : '',
+                                      price: product.price,
+                                      onTap: () {
+                                        RouteUtils.push(
+                                          ProductDetailsView(product: product),
+                                        );
+                                      },
+                                      product: product,
+                                    );
+                                  },
                                 ),
-                            ],
-                          );
-                        } else if (state is ProductFailure) {
-                          return Center(child: Text('خطأ: ${state.error}'));
-                        } else {
-                          return const SizedBox.shrink();
-                        }
-                      },
-                    ),
-                  ],
+                                if (state.hasMore)
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 20.h),
+                                    child:
+                                        state.isLoadingMore
+                                            ? const Center(
+                                              child: AppLoadingIndicator(),
+                                            )
+                                            : AppButton(
+                                              btnText: 'عرض المزيد',
+                                              width: 250.w,
+                                              onTap: () {
+                                                context
+                                                    .read<ProductCubit>()
+                                                    .loadMoreProducts();
+                                              },
+                                            ),
+                                  ),
+                              ],
+                            );
+                          } else if (state is ProductFailure) {
+                            return Center(child: Text('خطأ: ${state.error}'));
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

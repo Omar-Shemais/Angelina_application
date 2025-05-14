@@ -49,7 +49,8 @@ class _CartItemWidgetState extends State<CartItemWidget> {
       child: Stack(
         children: [
           Container(
-            height: 140.h,
+            // height: 140.h,
+            height: 0.16.sh,
             width: double.infinity,
             decoration: BoxDecoration(
               border: Border.all(color: AppColors.white),
@@ -130,7 +131,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                      vertical: 23.h,
+                      vertical: 15.h,
                       horizontal: 10.w,
                     ),
                     child: Column(
@@ -143,7 +144,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                           color: AppColors.boldTextColor,
                           textAlign: TextAlign.right,
                         ),
-                        SizedBox(height: 18.h),
+                        SizedBox(height: 15.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

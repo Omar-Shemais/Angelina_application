@@ -60,7 +60,7 @@ class _ProductDetailsImagState extends State<ProductDetailsImag> {
                     fit: BoxFit.cover,
                     errorBuilder:
                         (context, error, stackTrace) =>
-                            const Icon(Icons.error, size: 100),
+                            Icon(Icons.error, size: 100.sp),
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) return child;
                       return Shimmer.fromColors(
@@ -125,8 +125,8 @@ class _ProductDetailsImagState extends State<ProductDetailsImag> {
         ),
 
         Positioned(
-          left: 30,
-          top: 50,
+          left: 35,
+          top: 35,
           child: Column(
             children: [
               // UP Arrow
@@ -151,7 +151,7 @@ class _ProductDetailsImagState extends State<ProductDetailsImag> {
                       });
                     },
                     child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      margin: EdgeInsets.symmetric(vertical: 4.h),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color:
@@ -166,8 +166,8 @@ class _ProductDetailsImagState extends State<ProductDetailsImag> {
                         borderRadius: BorderRadius.circular(8),
                         child: Image.network(
                           imageUrl,
-                          height: 90,
-                          width: 70,
+                          height: 70.h,
+                          width: 70.w,
                           fit: BoxFit.cover,
                         ),
                       ),

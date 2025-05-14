@@ -1,6 +1,7 @@
 import 'package:angelina_app/core/utils/app_colors/app_colors.dart';
 import 'package:angelina_app/core/widgets/custom_button.dart';
 import 'package:angelina_app/core/widgets/custom_text.dart';
+import 'package:angelina_app/core/widgets/expandable_text.dart';
 import 'package:angelina_app/features/cart/manger/cubit/cart_cubit.dart';
 import 'package:angelina_app/features/cart/manger/cubit/cart_state.dart';
 import 'package:angelina_app/features/product_details/presentation/view/widgets/Custom_counter.dart';
@@ -44,12 +45,12 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
             else
               Container(
                 width: double.infinity,
-                height: 250,
+                height: 250.h,
                 color: Colors.grey[300],
-                child: const Icon(Icons.image_not_supported, size: 100),
+                child: Icon(Icons.image_not_supported, size: 100.sp),
               ),
 
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
 
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 23.w),
@@ -62,7 +63,7 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                     textAlign: TextAlign.right,
                   ),
 
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -92,14 +93,11 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                   ),
                   SizedBox(height: 15.h),
 
-                  AppText(
-                    title:
+                  ExpandableDescription(
+                    description:
                         widget.product.description.isNotEmpty
                             ? cleanDescription(widget.product.description)
                             : 'لا يوجد وصف متاح لهذا المنتج.',
-                    fontSize: 12,
-                    color: AppColors.lightTextColor,
-                    textAlign: TextAlign.right,
                   ),
                   SizedBox(height: 20.h),
                   // Product Price
@@ -113,41 +111,46 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
                             widget.product.id,
                           );
 
-                          return AppButton(
-                            btnText:
-                                isInCart ? 'الحذف من السله' : 'اضافة الى السلة',
-                            height: 45.h,
-                            width: 190.w,
-                            onTap: () {
-                              if (isInCart) {
-                                cartCubit.removeFromCart(
-                                  CartProductModel(
-                                    id: widget.product.id,
-                                    name: widget.product.name,
-                                    price: widget.product.price,
-                                    imageUrls: widget.product.imageUrls,
-                                    categories: widget.product.categories,
-                                    categoryIds: widget.product.categoryIds,
+                          return Flexible(
+                            child: AppButton(
+                              btnText:
+                                  isInCart
+                                      ? 'الحذف من السله'
+                                      : 'اضافة الى السلة',
+                              height: 45.h,
+                              width: 190.w,
+                              onTap: () {
+                                if (isInCart) {
+                                  cartCubit.removeFromCart(
+                                    CartProductModel(
+                                      id: widget.product.id,
+                                      name: widget.product.name,
+                                      price: widget.product.price,
+                                      imageUrls: widget.product.imageUrls,
+                                      categories: widget.product.categories,
+                                      categoryIds: widget.product.categoryIds,
+                                      quantity: quantity,
+                                    ),
+                                  );
+                                } else {
+                                  cartCubit.addToCart(
+                                    widget.product,
                                     quantity: quantity,
-                                  ),
-                                );
-                              } else {
-                                cartCubit.addToCart(
-                                  widget.product,
-                                  quantity: quantity,
-                                );
-                              }
-                              setState(() {});
-                            },
-                            btnColor:
-                                isInCart
-                                    ? AppColors.lightTextColor
-                                    : AppColors.primaryColor,
-                            textColor:
-                                isInCart ? AppColors.white : AppColors.white,
+                                  );
+                                }
+                                setState(() {});
+                              },
+                              btnColor:
+                                  isInCart
+                                      ? AppColors.lightTextColor
+                                      : AppColors.primaryColor,
+                              textColor:
+                                  isInCart ? AppColors.white : AppColors.white,
+                            ),
                           );
                         },
                       ),
+                      SizedBox(width: 10.w),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [

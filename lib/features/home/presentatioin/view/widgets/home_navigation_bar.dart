@@ -11,7 +11,7 @@ import 'package:angelina_app/features/home/presentatioin/view/home_view.dart';
 import 'package:angelina_app/features/profile/prensentation/view/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 class HomeNavigationBar extends StatefulWidget {
   const HomeNavigationBar({super.key, this.selectedIndex = 0});
@@ -29,6 +29,7 @@ class _HomeNavigationBarState extends State<HomeNavigationBar> {
   void initState() {
     super.initState();
     _selectedIndex = widget.selectedIndex;
+    splashDestroier();
 
     Future.microtask(() {
       context.read<CartCubit>().loadCart();
@@ -39,12 +40,18 @@ class _HomeNavigationBarState extends State<HomeNavigationBar> {
         context.read<ProductCubit>().checkForNewProducts();
       });
       context.read<CartCubit>().loadCart().then((_) {
-        context.read<CartCubit>().checkForAbandonedCarts();
+        context.read<CartCubit>().startCheckingForAbandonedCarts();
       });
+
       context.read<FavoriteCubit>().loadFavorites().then((_) {
         context.read<FavoriteCubit>().checkFavoriteNotifications();
       });
     });
+  }
+
+  void splashDestroier() async {
+    await Future.delayed(const Duration(seconds: 3));
+    FlutterNativeSplash.remove();
   }
 
   final List<Widget> _pages = [

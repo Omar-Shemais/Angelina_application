@@ -59,7 +59,11 @@ class _CustomCounterState extends State<CustomCounter> {
             onTap: _decrement,
             child: Icon(Icons.remove, color: AppColors.primaryColor),
           ),
-          AppText(title: quantity.toString(), color: AppColors.boldTextColor),
+          AppText(
+            title: quantity.toString(),
+            color: AppColors.lightTextColor,
+            fontSize: 15,
+          ),
           GestureDetector(
             onTap: _increment,
             child: Icon(Icons.add, color: AppColors.primaryColor),

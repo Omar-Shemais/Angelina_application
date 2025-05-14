@@ -9,16 +9,17 @@ import 'package:angelina_app/features/home/data/repo/product_repo.dart';
 import 'package:angelina_app/features/home/manger/category_cubit/category_cubit.dart';
 import 'package:angelina_app/features/home/manger/cubit/product_cubit.dart';
 import 'package:angelina_app/features/home/presentatioin/view/widgets/home_navigation_bar.dart';
-import 'package:angelina_app/features/splash/presentaion/view/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CachingUtils.init();
   await ScreenUtil.ensureScreenSize();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   // Initialize notification service
   await NotificationService.init();
 
@@ -57,30 +58,30 @@ class AngelinaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: RouteUtils.navigatorKey,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.white,
-        textSelectionTheme: TextSelectionThemeData(
-          cursorColor: AppColors.primaryColor,
-          selectionColor: AppColors.lightTextColor,
-          selectionHandleColor: AppColors.primaryColor,
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: MaterialApp(
+        navigatorKey: RouteUtils.navigatorKey,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scaffoldBackgroundColor: AppColors.white,
+          textSelectionTheme: TextSelectionThemeData(
+            cursorColor: AppColors.primaryColor,
+            selectionColor: AppColors.lightTextColor,
+            selectionHandleColor: AppColors.primaryColor,
+          ),
+          primaryColor: Color(0xff355B5E),
         ),
-        primaryColor: Color(0xff355B5E),
+        // builder: (context, child) {
+        //   ScreenUtil.init(context, designSize: const Size(375, 812));
+        //   return child!;
+        // },
+        routes: {'/home': (context) => HomeNavigationBar(selectedIndex: 0)},
+        title: "Angelina",
+        home: const HomeNavigationBar(),
       ),
-      builder: (context, child) {
-        ScreenUtil.init(context, designSize: const Size(375, 812));
-        return child!;
-      },
-      routes: {
-        '/home':
-            (context) => HomeNavigationBar(
-              selectedIndex: 0,
-            ), // Replace with your actual Cart screen
-      },
-      title: "Angelina",
-      home: const SplashView(),
     );
   }
 }

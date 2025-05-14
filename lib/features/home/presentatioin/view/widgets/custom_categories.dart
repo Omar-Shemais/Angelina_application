@@ -19,43 +19,54 @@ class CustomCategories extends StatelessWidget {
           return const Center(child: ShimmerCategoriesLoader());
         } else if (state is CategorySuccess) {
           return SizedBox(
-            height: 100,
+            height: 110.h, // Reduced from 100.h
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               reverse: true,
               itemCount: state.categories.length,
-              separatorBuilder: (_, __) => SizedBox(width: 10),
+              separatorBuilder: (_, __) => SizedBox(width: 10.w),
               itemBuilder: (context, index) {
                 final category = state.categories[index];
-                return Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        RouteUtils.push(
-                          ProductCategoryView(
-                            categoryId: category.id,
-                            categoryName: category.name,
-                          ),
-                        );
-                      },
-                      child: Container(
-                        height: 70.h,
-                        width: 70.w,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(50),
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'assets/images/category_placeholder.png',
+                return SizedBox(
+                  width: 70.w,
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          RouteUtils.push(
+                            ProductCategoryView(
+                              categoryId: category.id,
+                              categoryName: category.name,
                             ),
-                            fit: BoxFit.cover,
+                          );
+                        },
+                        child: Container(
+                          height: 60.h,
+                          width: 60.w,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(50.r),
+                            image: const DecorationImage(
+                              image: AssetImage(
+                                'assets/images/category_placeholder.png',
+                              ),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-
-                    AppText(title: category.name, fontSize: 12),
-                  ],
+                      SizedBox(height: 4.h),
+                      Flexible(
+                        child: AppText(
+                          title: category.name,
+                          fontSize: 11,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
             ),

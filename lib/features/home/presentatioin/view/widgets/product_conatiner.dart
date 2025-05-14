@@ -47,192 +47,189 @@ class _ProductContainerState extends State<ProductContainer> {
       discountPercent = (((regular - sale) / regular) * 100).roundToDouble();
     }
 
-    return Container(
-      height: 304.h,
-      width: 159.w,
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 5,
-            blurRadius: 10,
-            offset: const Offset(0, 2),
+    return InkWell(
+      onTap: widget.onTap,
+      child: IntrinsicHeight(
+        child: Card(
+          color: AppColors.white,
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+            side: BorderSide(color: Colors.grey.shade300), // optional border
           ),
-        ],
-      ),
-      padding: EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Stack(
-            children: [
-              Container(
-                height: 150.h,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image:
-                        widget.imageUrl.isNotEmpty
-                            ? NetworkImage(widget.imageUrl)
-                            : const AssetImage(
-                                  'assets/images/product_placeholder.png',
-                                )
-                                as ImageProvider,
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-              // ⭐ Discount badge
-              if (hasDiscount)
-                Positioned(
-                  top: 5.h,
-                  right: 5.w,
-                  child: CircleAvatar(
-                    backgroundColor: AppColors.primaryColor,
-                    radius: 20.r,
-                    child: AppText(
-                      title: '-${discountPercent.toInt()}%',
-
-                      color: Colors.white,
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.bold,
+          child: Container(
+            width: 159.w,
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      height: 150.h,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image:
+                              widget.imageUrl.isNotEmpty
+                                  ? NetworkImage(widget.imageUrl)
+                                  : const AssetImage(
+                                        'assets/images/product_placeholder.png',
+                                      )
+                                      as ImageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
-                  ),
-                ),
-              // ❤️ Favorite Icon
-              Positioned(
-                top: 5.h,
-                left: 5.w,
-                child: CircleAvatar(
-                  backgroundColor: AppColors.white.withOpacity(0.8),
-                  radius: 15.r,
-                  child: BlocBuilder<FavoriteCubit, FavoriteState>(
-                    builder: (context, state) {
-                      final cubit = context.read<FavoriteCubit>();
-                      bool isFav = cubit.isFavorite(widget.product);
-                      return GestureDetector(
-                        onTap: () {
-                          cubit.toggleFavorite(widget.product);
-                          setState(() {});
-                        },
+                    if (hasDiscount)
+                      Positioned(
+                        top: 5.h,
+                        right: 5.w,
                         child: CircleAvatar(
-                          backgroundColor: Colors.white.withOpacity(0.8),
-                          child: Icon(
-                            size: 20.sp,
-                            isFav ? Icons.favorite : Icons.favorite_border,
-                            color: AppColors.primaryColor,
+                          backgroundColor: AppColors.primaryColor,
+                          radius: 20.r,
+                          child: AppText(
+                            title: '-${discountPercent.toInt()}%',
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 5.h),
-          SizedBox(
-            height: 30.h,
-            child: AppText(
-              title: widget.name,
-              fontSize: 10,
-              textAlign: TextAlign.center,
-              fontWeight: FontWeight.w700,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          SizedBox(height: 5.h),
-          AppText(
-            title: widget.category,
-            fontSize: 8.5,
-            textAlign: TextAlign.center,
-            color: AppColors.lightTextColor,
-          ),
-          SizedBox(height: 5.h),
-          // 💰 Pricing Row
-          if (hasDiscount)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  textDirection:
-                      TextDirection.rtl, // this flips the row direction
-                  children: [
-                    AppText(
-                      title: product.regularPrice,
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.bold,
-
-                      color: AppColors.lightTextColor,
-                      textDecoration: TextDecoration.lineThrough,
-                    ),
-                    AppText(
-                      title: 'ر.س',
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.lightTextColor,
-                      textDecoration: TextDecoration.lineThrough,
+                      ),
+                    Positioned(
+                      top: 5.h,
+                      left: 5.w,
+                      child: BlocBuilder<FavoriteCubit, FavoriteState>(
+                        builder: (context, state) {
+                          final cubit = context.read<FavoriteCubit>();
+                          final isFav = cubit.isFavorite(widget.product);
+                          return Container(
+                            width: 28.w,
+                            height: 28.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 4.r,
+                                ),
+                              ],
+                            ),
+                            child: Center(
+                              child: GestureDetector(
+                                onTap: () {
+                                  cubit.toggleFavorite(product);
+                                  setState(() {});
+                                },
+                                child: Icon(
+                                  isFav
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  size: 16.sp,
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(width: 5.w),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  textDirection:
-                      TextDirection.rtl, // this flips the row direction
-                  children: [
-                    AppText(
-                      title: product.salePrice,
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primaryColor,
+                SizedBox(height: 5.h),
+                AppText(
+                  title: widget.name,
+                  fontSize: 12,
+                  textAlign: TextAlign.center,
+                  fontWeight: FontWeight.w700,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 5.h),
+                AppText(
+                  title: widget.category,
+                  fontSize: 10,
+                  textAlign: TextAlign.center,
+                  color: AppColors.lightTextColor,
+                ),
+                SizedBox(height: 5.h),
+
+                /// Pricing
+                hasDiscount
+                    ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          textDirection: TextDirection.rtl,
+                          children: [
+                            AppText(
+                              title: product.regularPrice,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.lightTextColor,
+                              textDecoration: TextDecoration.lineThrough,
+                            ),
+                            AppText(
+                              title: 'ر.س',
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.lightTextColor,
+                              textDecoration: TextDecoration.lineThrough,
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 5.w),
+                        Row(
+                          textDirection: TextDirection.rtl,
+                          children: [
+                            AppText(
+                              title: product.salePrice,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryColor,
+                            ),
+                            AppText(
+                              title: 'ر.س',
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryColor,
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                    : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      textDirection: TextDirection.rtl,
+                      children: [
+                        AppText(
+                          title: widget.price,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                        ),
+                        AppText(
+                          title: 'ر.س',
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                        ),
+                      ],
                     ),
 
-                    AppText(
-                      title: 'ر.س',
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primaryColor,
-                    ),
-                  ],
-                ),
-              ],
-            )
-          else
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              textDirection: TextDirection.rtl,
-              children: [
-                AppText(
-                  title: widget.price,
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primaryColor,
-                ),
-
-                AppText(
-                  title: 'ر.س',
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primaryColor,
+                SizedBox(height: 5.h),
+                AppButton(
+                  btnText: 'تحديد أحد الخيارات',
+                  fontSize: 9,
+                  width: 98.w,
+                  height: 28.h,
                 ),
               ],
             ),
-
-          SizedBox(height: 5.h),
-          AppButton(
-            btnText: 'تحديد أحد الخيارات',
-            fontSize: 9.sp,
-            height: 24.h,
-            width: 98.w,
-            onTap: widget.onTap,
           ),
-        ],
+        ),
       ),
     );
   }

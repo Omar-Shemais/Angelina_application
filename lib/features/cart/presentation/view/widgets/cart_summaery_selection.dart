@@ -31,7 +31,8 @@ class _CartSummarySectionState extends State<CartSummarySection> {
     final finalTotal = total - discountAmount;
 
     return Container(
-      height: 274.h,
+      // height: 274.h,
+      height: 0.34.sh,
       width: double.infinity,
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.lightTextColor),
@@ -162,7 +163,6 @@ class _CartSummarySectionState extends State<CartSummarySection> {
                   final finalTotalCents =
                       (context.read<CartCubit>().getFinalTotal() * 100).toInt();
 
-                  // RouteUtils.push(UserInfoPage(totalPriceCents: finalTotalCents));
                   Navigator.push(
                     context,
                     MaterialPageRoute(

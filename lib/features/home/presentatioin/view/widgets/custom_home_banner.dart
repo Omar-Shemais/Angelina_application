@@ -52,8 +52,8 @@ class _CustomHomeBannerState extends State<CustomHomeBanner> {
                         ), // Your text
                         AppButton(
                           btnText: 'تسوق الان',
-                          height: 20.h,
-                          width: 60.w,
+                          width: 71.38.w,
+                          height: 21.95.h,
                           fontSize: 10.sp,
                           textColor: AppColors.yellow,
                         ), // Your button

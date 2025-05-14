@@ -1,14 +1,13 @@
 import 'package:angelina_app/core/utils/app_colors/app_colors.dart';
 import 'package:angelina_app/core/widgets/app_loading_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppButton extends StatelessWidget {
   AppButton({
     super.key,
     required this.btnText,
     this.onTap,
-    this.width = 150,
+    this.width = double.infinity,
     this.height = 45,
     this.borderRadius,
     this.isLoading = false,
@@ -39,8 +38,8 @@ class AppButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
-          height: height.h,
-          width: width.w,
+          height: height,
+          width: width,
           decoration: BoxDecoration(
             color: btnColor,
             borderRadius: borderRadius ?? BorderRadius.circular(16),
@@ -59,7 +58,7 @@ class AppButton extends StatelessWidget {
                   fontFamily: 'Roboto',
                 ),
               ),
-              if (icon != null) ...[SizedBox(width: iconSpacing.w), icon!],
+              if (icon != null) ...[SizedBox(width: iconSpacing), icon!],
             ],
           ),
         ),

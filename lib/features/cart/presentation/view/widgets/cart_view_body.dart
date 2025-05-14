@@ -21,20 +21,24 @@ class CartViewBody extends StatelessWidget {
             return const Center(child: Text('لا توجد منتجات في السلة'));
           }
 
-          return Column(
-            children: [
-              SizedBox(height: 40.h),
-              AppAppBar(title: 'عربه التسوق'),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: cartItems.length,
-                  itemBuilder: (context, index) {
-                    return CartItemWidget(itemIndex: index);
-                  },
+          return SafeArea(
+            child: Column(
+              children: [
+                // SizedBox(height: 40.h),
+                AppAppBar(title: 'عربه التسوق'),
+                SizedBox(height: 10.h),
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: cartItems.length,
+                    itemBuilder: (context, index) {
+                      return CartItemWidget(itemIndex: index);
+                    },
+                  ),
                 ),
-              ),
-              CartSummarySection(),
-            ],
+                CartSummarySection(),
+              ],
+            ),
           );
         } else if (state is CartLoading) {
           return const Center(child: CircularProgressIndicator());

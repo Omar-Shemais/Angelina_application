@@ -15,9 +15,9 @@ class QuantitySelector extends StatelessWidget {
     final cartCubit = context.read<CartCubit>();
 
     return Container(
-      height: 20.h,
-      width: 53.w,
-      padding: EdgeInsets.symmetric(horizontal: 8.w),
+      height: 25.h,
+      width: 60.w,
+      padding: EdgeInsets.symmetric(horizontal: 5.w),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.lightTextColor, width: 1),
         borderRadius: BorderRadius.circular(5),
@@ -32,19 +32,26 @@ class QuantitySelector extends StatelessWidget {
             child: Icon(
               Icons.remove,
               color: AppColors.primaryColor,
-              size: 10.5,
+              size: 12.sp,
             ),
           ),
-          AppText(
-            title: item.quantity.toString(),
-            color: AppColors.boldTextColor,
-            fontSize: 10.5,
+          Expanded(
+            child: Center(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: AppText(
+                  title: item.quantity.toString(),
+                  color: AppColors.boldTextColor,
+                  fontSize: 12.sp,
+                ),
+              ),
+            ),
           ),
           GestureDetector(
             onTap: () {
               cartCubit.increaseQuantity(item.id);
             },
-            child: Icon(Icons.add, color: AppColors.primaryColor, size: 10.5),
+            child: Icon(Icons.add, color: AppColors.primaryColor, size: 12.sp),
           ),
         ],
       ),

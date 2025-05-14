@@ -14,6 +14,7 @@ class AppText extends StatelessWidget {
     this.overflow,
     this.textAlign,
     this.cutoff,
+    this.textDirection,
   });
 
   final String title;
@@ -25,6 +26,7 @@ class AppText extends StatelessWidget {
   final TextOverflow? overflow;
   final TextAlign? textAlign;
   final int? cutoff;
+  final TextDirection? textDirection;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class AppText extends StatelessWidget {
       displayTitle,
       maxLines: maxLines,
       textAlign: textAlign,
+      textDirection: textDirection,
       style: TextStyle(
         color: color,
         fontSize: fontSize.sp,
