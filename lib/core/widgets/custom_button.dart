@@ -3,7 +3,7 @@ import 'package:angelina_app/core/widgets/app_loading_indicator.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
-  AppButton({
+  const AppButton({
     super.key,
     required this.btnText,
     this.onTap,

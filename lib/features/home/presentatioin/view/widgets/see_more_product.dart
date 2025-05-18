@@ -80,7 +80,10 @@ class SeeMoreProduct extends StatelessWidget {
                                 ),
                                 if (state.hasMore)
                                   Padding(
-                                    padding: EdgeInsets.only(bottom: 20.h),
+                                    padding: EdgeInsets.only(
+                                      bottom: 20.h,
+                                      top: 20.h,
+                                    ),
                                     child:
                                         state.isLoadingMore
                                             ? const Center(

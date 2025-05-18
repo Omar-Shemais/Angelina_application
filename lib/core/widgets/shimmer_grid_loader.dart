@@ -4,7 +4,6 @@ import 'package:shimmer/shimmer.dart';
 
 class ShimmerGridLoader extends StatelessWidget {
   const ShimmerGridLoader({super.key});
-
   @override
   Widget build(BuildContext context) {
     return GridView.builder(

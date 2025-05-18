@@ -218,14 +218,16 @@ class _ProductContainerState extends State<ProductContainer> {
                         ),
                       ],
                     ),
+                Spacer(flex: 4),
 
-                SizedBox(height: 5.h),
+                // SizedBox(height: 5.h),
                 AppButton(
                   btnText: 'تحديد أحد الخيارات',
                   fontSize: 9,
                   width: 98.w,
                   height: 28.h,
                 ),
+                Spacer(flex: 2),
               ],
             ),
           ),

@@ -76,8 +76,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
           !notifiedProductIds.contains(product.id)) {
         final message =
             isPriceDropped
-                ? 'سعر ${product.id} انخفض من ${lastPrice.toStringAsFixed(2)} إلى ${currentPrice.toStringAsFixed(2)}!'
-                : '${product.id} اقترب من النفاد، سارع بشرائه الآن.';
+                ? 'سعر ${product.name} انخفض من ${lastPrice.toStringAsFixed(2)} إلى ${currentPrice.toStringAsFixed(2)}!'
+                : '${product.name} اقترب من النفاد، سارع بشرائه الآن.';
 
         await NotificationService.showNotification(
           id: 2000 + product.id,

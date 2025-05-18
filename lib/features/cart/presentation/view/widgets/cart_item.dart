@@ -96,6 +96,49 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                       ),
                     ),
                     Positioned(
+                      top: 4.h,
+                      right: 4.w,
+                      child: BlocBuilder<FavoriteCubit, FavoriteState>(
+                        builder: (context, state) {
+                          final isFavorite = context
+                              .read<FavoriteCubit>()
+                              .isFavorite(productModel);
+                          return Container(
+                            width: 25.w,
+                            height: 25.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 2.r,
+                                ),
+                              ],
+                            ),
+                            child: Center(
+                              child: GestureDetector(
+                                onTap: () {
+                                  context.read<FavoriteCubit>().toggleFavorite(
+                                    productModel,
+                                  );
+                                  setState(() {});
+                                },
+                                child: Icon(
+                                  isFavorite
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: AppColors.primaryColor,
+                                  size: 18.sp,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    /*
+                     Positioned(
                       top: 5.h,
                       right: 5.w,
                       child: BlocBuilder<FavoriteCubit, FavoriteState>(
@@ -126,6 +169,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                         },
                       ),
                     ),
+                    */
                   ],
                 ),
                 Expanded(

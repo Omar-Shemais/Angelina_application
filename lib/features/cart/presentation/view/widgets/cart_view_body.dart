@@ -24,9 +24,8 @@ class CartViewBody extends StatelessWidget {
           return SafeArea(
             child: Column(
               children: [
-                // SizedBox(height: 40.h),
                 AppAppBar(title: 'عربه التسوق'),
-                SizedBox(height: 10.h),
+                SizedBox(height: 20.h),
                 Expanded(
                   child: ListView.builder(
                     shrinkWrap: true,

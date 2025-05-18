@@ -31,6 +31,30 @@ class CustomCategories extends StatelessWidget {
                   width: 70.w,
                   child: Column(
                     children: [
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     RouteUtils.push(
+                      //       ProductCategoryView(
+                      //         categoryId: category.id,
+                      //         categoryName: category.name,
+                      //       ),
+                      //     );
+                      //   },
+                      //   child: Container(
+                      //     height: 60.h,
+                      //     width: 60.w,
+                      //     decoration: BoxDecoration(
+                      //       color: Colors.grey[200],
+                      //       borderRadius: BorderRadius.circular(50.r),
+                      //       image: const DecorationImage(
+                      //         image: AssetImage(
+                      //           'assets/images/category_placeholder.png',
+                      //         ),
+                      //         fit: BoxFit.cover,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       GestureDetector(
                         onTap: () {
                           RouteUtils.push(
@@ -40,21 +64,15 @@ class CustomCategories extends StatelessWidget {
                             ),
                           );
                         },
-                        child: Container(
-                          height: 60.h,
-                          width: 60.w,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(50.r),
-                            image: const DecorationImage(
-                              image: AssetImage(
-                                'assets/images/category_placeholder.png',
-                              ),
-                              fit: BoxFit.cover,
-                            ),
+                        child: CircleAvatar(
+                          radius: 46.r, // equivalent to 60.w / 2
+                          backgroundColor: Colors.grey[200],
+                          backgroundImage: const AssetImage(
+                            'assets/images/category_placeholder.png',
                           ),
                         ),
                       ),
+
                       SizedBox(height: 4.h),
                       Flexible(
                         child: AppText(

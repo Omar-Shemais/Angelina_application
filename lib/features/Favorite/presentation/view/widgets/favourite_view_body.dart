@@ -27,17 +27,13 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 16.w,
-        ), // Smaller horizontal padding
-        // Wrap the main Column with a LayoutBuilder to make it responsive
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+
         child: LayoutBuilder(
           builder: (context, constraints) {
-            // Additional flag for extremely small screens like folds
             final isVerySmallScreen = constraints.maxHeight < 400;
             return Column(
               children: [
-                // App bar and search section - fixed height components
                 isVerySmallScreen
                     ? Padding(
                       padding: EdgeInsets.symmetric(vertical: 4.h),
@@ -165,8 +161,8 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
                                                   top: 4.h,
                                                   right: 4.w,
                                                   child: Container(
-                                                    width: 20.w,
-                                                    height: 20.w,
+                                                    width: 25.w,
+                                                    height: 25.w,
                                                     decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
                                                       color: Colors.white,
@@ -229,7 +225,8 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
                                                     textAlign: TextAlign.right,
                                                   ),
 
-                                                  SizedBox(height: 10.h),
+                                                  // SizedBox(height: 10.h),
+                                                  Spacer(),
                                                   Row(
                                                     textDirection:
                                                         TextDirection.rtl,
@@ -274,8 +271,8 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
                                                           }
                                                         },
                                                         child: Container(
-                                                          width: 20.w,
-                                                          height: 20.w,
+                                                          width: 22.w,
+                                                          height: 22.w,
                                                           decoration: BoxDecoration(
                                                             shape:
                                                                 BoxShape.circle,
