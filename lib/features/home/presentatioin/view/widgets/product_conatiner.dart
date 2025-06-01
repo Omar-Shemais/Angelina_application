@@ -6,6 +6,7 @@ import 'package:angelina_app/features/home/data/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProductContainer extends StatefulWidget {
   final String imageUrl;
@@ -69,20 +70,47 @@ class _ProductContainerState extends State<ProductContainer> {
                     Container(
                       height: 150.h,
                       width: double.infinity,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image:
-                              widget.imageUrl.isNotEmpty
-                                  ? NetworkImage(widget.imageUrl)
-                                  : const AssetImage(
-                                        'assets/images/product_placeholder.png',
-                                      )
-                                      as ImageProvider,
-                          fit: BoxFit.cover,
-                        ),
+                      child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
+                        child:
+                            widget.imageUrl.isNotEmpty
+                                ? Image.network(
+                                  widget.imageUrl,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder: (
+                                    context,
+                                    child,
+                                    loadingProgress,
+                                  ) {
+                                    if (loadingProgress == null) return child;
+                                    return Shimmer.fromColors(
+                                      baseColor: Colors.grey.shade300,
+                                      highlightColor: Colors.grey.shade100,
+                                      child: Container(
+                                        color: Colors.white,
+                                        height: 150.h,
+                                        width: double.infinity,
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(
+                                      'assets/images/product_placeholder.png',
+                                      fit: BoxFit.cover,
+                                      height: 150.h,
+                                      width: double.infinity,
+                                    );
+                                  },
+                                )
+                                : Image.asset(
+                                  'assets/images/product_placeholder.png',
+                                  fit: BoxFit.cover,
+                                  height: 150.h,
+                                  width: double.infinity,
+                                ),
                       ),
                     ),
+
                     if (hasDiscount)
                       Positioned(
                         top: 5.h,

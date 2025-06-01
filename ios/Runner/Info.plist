@@ -45,5 +45,23 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!-- ✅ Camera and Photo Library permissions -->
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs access to your camera for image capture.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to your photo library to choose images.</string>
+
+	<!-- ✅ Notifications permission -->
+	<key>NSUserNotificationAlertStyle</key>
+	<string>Alert</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+
+	<!-- ✅ WebView support -->
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
 </dict>
 </plist>
