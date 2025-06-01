@@ -157,7 +157,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     AppText(
-                                      title: "طلب #${orderIndex + 1}",
+                                      title: "Order ${orderIndex + 1}",
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.boldTextColor,

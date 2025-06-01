@@ -58,7 +58,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
               color: AppColors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
+                  color: Colors.grey.withAlpha((0.5 * 255).toInt()),
                   spreadRadius: 5,
                   blurRadius: 10,
                   offset: const Offset(0, 2),

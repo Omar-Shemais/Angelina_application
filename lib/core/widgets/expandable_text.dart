@@ -34,11 +34,8 @@ class _ExpandableDescriptionState extends State<ExpandableDescription> {
       textDirection: TextDirection.rtl,
     );
 
-    tp.layout(
-      maxWidth: MediaQuery.of(context).size.width - 40.w,
-    ); // adjust padding
+    tp.layout(maxWidth: MediaQuery.of(context).size.width - 40.w);
 
-    // If text overflows 3 lines, we show the toggle
     setState(() {
       showToggle = tp.didExceedMaxLines;
     });

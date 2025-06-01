@@ -52,7 +52,8 @@ class _ProductContainerState extends State<ProductContainer> {
       child: IntrinsicHeight(
         child: Card(
           color: AppColors.white,
-          elevation: 1,
+          elevation: 0,
+
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
             side: BorderSide(color: Colors.grey.shade300), // optional border

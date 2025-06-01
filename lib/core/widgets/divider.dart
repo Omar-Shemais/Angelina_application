@@ -1,6 +1,7 @@
 import 'package:angelina_app/core/utils/app_colors/app_colors.dart';
 import 'package:angelina_app/core/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomDivider extends StatelessWidget {
   const CustomDivider({
@@ -19,7 +20,7 @@ class CustomDivider extends StatelessWidget {
         children: <Widget>[
           const Expanded(child: Divider(color: AppColors.black, thickness: 1)),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: AppText(
               title: text,
               fontWeight: FontWeight.w400,

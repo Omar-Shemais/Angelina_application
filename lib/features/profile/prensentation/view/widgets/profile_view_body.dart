@@ -35,12 +35,14 @@ class ProfileViewBody extends StatelessWidget {
               onTap: () {
                 RouteUtils.push(OrderHistory());
               },
+              showTrailingIcon: false,
             ),
 
             PofileItem(
               leadingIcon: Icons.privacy_tip_outlined,
               text: 'Privacy & policy',
               onTap: () {},
+              showTrailingIcon: false,
             ),
             PofileItem(
               leadingIcon: Icons.help_outline,

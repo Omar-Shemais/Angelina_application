@@ -36,7 +36,7 @@ class PofileItem extends StatelessWidget {
               AppText(title: text),
             ],
           ),
-          // if  (showTrailingIcon) Icon(icon ?? Icons.arrow_forward_ios, size: 20),
+          if (showTrailingIcon) Icon(icon ?? Icons.arrow_forward_ios, size: 20),
           showTrailingIcon != true
               ? const Icon(
                 Icons.arrow_forward_ios,
