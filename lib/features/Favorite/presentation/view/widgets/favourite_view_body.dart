@@ -28,7 +28,6 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
-
         child: LayoutBuilder(
           builder: (context, constraints) {
             final isVerySmallScreen = constraints.maxHeight < 400;
@@ -70,8 +69,6 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
 
                         return ListView.builder(
                           itemCount: state.favorites.length,
-                          // shrinkWrap: true,
-                          // Add physics to ensure proper scrolling
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             final product = state.favorites[index];
@@ -80,9 +77,7 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
                                 .isFavorite(product);
 
                             return Padding(
-                              padding: EdgeInsets.only(
-                                bottom: 8.h,
-                              ), // Even smaller padding for very small screens
+                              padding: EdgeInsets.only(bottom: 8.h),
                               child: ConstrainedBox(
                                 constraints: BoxConstraints(maxWidth: 500.w),
                                 child: InkWell(
@@ -91,7 +86,6 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
                                         ProductDetailsView(product: product),
                                       ),
                                   child: SizedBox(
-                                    // Even smaller height for very small screens
                                     height: 0.159.sh,
                                     child: Card(
                                       color: AppColors.white,
@@ -112,10 +106,9 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          /// 📷 Image section - fixed width approach
+                                          // 📷 Image section
                                           Container(
                                             width: 156.w,
-                                            // height: double.infinity,
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.only(
                                                 topRight: Radius.circular(8.r),
@@ -138,23 +131,27 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
                                                               8.r,
                                                             ),
                                                       ),
-                                                  child: Image(
-                                                    image:
-                                                        product
-                                                                .imageUrls
-                                                                .isNotEmpty
-                                                            ? NetworkImage(
-                                                              product
-                                                                  .imageUrls
-                                                                  .first,
-                                                            )
-                                                            : const AssetImage(
-                                                                  'assets/images/product_placeholder.png',
-                                                                )
-                                                                as ImageProvider,
+                                                  child: Image.network(
+                                                    product.imageUrls.isNotEmpty
+                                                        ? product
+                                                            .imageUrls
+                                                            .first
+                                                        : 'https://via.placeholder.com/150',
                                                     fit: BoxFit.cover,
                                                     width: double.infinity,
                                                     height: double.infinity,
+                                                    errorBuilder: (
+                                                      context,
+                                                      error,
+                                                      stackTrace,
+                                                    ) {
+                                                      return Image.asset(
+                                                        'assets/images/product_placeholder.png',
+                                                        fit: BoxFit.cover,
+                                                        width: double.infinity,
+                                                        height: double.infinity,
+                                                      );
+                                                    },
                                                   ),
                                                 ),
                                                 Positioned(
@@ -203,7 +200,7 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
                                             ),
                                           ),
 
-                                          /// 📝 Product info
+                                          // 📝 Product info
                                           Expanded(
                                             child: Padding(
                                               padding: EdgeInsets.symmetric(
@@ -224,8 +221,6 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
                                                         TextOverflow.ellipsis,
                                                     textAlign: TextAlign.right,
                                                   ),
-
-                                                  // SizedBox(height: 10.h),
                                                   Spacer(),
                                                   Row(
                                                     textDirection:
@@ -238,9 +233,6 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
                                                         title:
                                                             '${product.price} ر.س',
                                                         fontSize: 13,
-                                                        textDirection:
-                                                            TextDirection.rtl,
-
                                                         color:
                                                             AppColors
                                                                 .primaryColor,
@@ -342,7 +334,6 @@ class _FavouriteViewBodyState extends State<FavouriteViewBody> {
                           return AppButton(
                             btnText: 'اضافه الى السله',
                             height: 45.h,
-
                             onTap: () async {
                               final cartCubit = context.read<CartCubit>();
                               final favoriteCubit =

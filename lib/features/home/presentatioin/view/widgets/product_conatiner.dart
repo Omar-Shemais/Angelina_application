@@ -6,7 +6,9 @@ import 'package:angelina_app/features/home/data/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shimmer/shimmer.dart';
+import 'dart:io';
+
+import 'package:shimmer/shimmer.dart'; // Import dart:io for HttpClient
 
 class ProductContainer extends StatefulWidget {
   final String imageUrl;
@@ -31,6 +33,30 @@ class ProductContainer extends StatefulWidget {
 }
 
 class _ProductContainerState extends State<ProductContainer> {
+  bool _isConnected = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkNetworkConnection();
+  }
+
+  // Check if the device is connected to the internet
+  Future<void> _checkNetworkConnection() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        setState(() {
+          _isConnected = true;
+        });
+      }
+    } catch (_) {
+      setState(() {
+        _isConnected = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final product = widget.product;
@@ -54,10 +80,9 @@ class _ProductContainerState extends State<ProductContainer> {
         child: Card(
           color: AppColors.white,
           elevation: 0,
-
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
-            side: BorderSide(color: Colors.grey.shade300), // optional border
+            side: BorderSide(color: Colors.grey.shade300),
           ),
           child: Container(
             width: 159.w,
@@ -74,43 +99,31 @@ class _ProductContainerState extends State<ProductContainer> {
                         borderRadius: BorderRadius.circular(15),
                         child:
                             widget.imageUrl.isNotEmpty
-                                ? Image.network(
-                                  widget.imageUrl,
-                                  fit: BoxFit.cover,
-                                  loadingBuilder: (
-                                    context,
-                                    child,
-                                    loadingProgress,
-                                  ) {
-                                    if (loadingProgress == null) return child;
-                                    return Shimmer.fromColors(
-                                      baseColor: Colors.grey.shade300,
-                                      highlightColor: Colors.grey.shade100,
-                                      child: Container(
-                                        color: Colors.white,
-                                        height: 150.h,
-                                        width: double.infinity,
-                                      ),
-                                    );
-                                  },
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Image.asset(
-                                      'assets/images/product_placeholder.png',
+                                ? (_isConnected
+                                    ? Image.network(
+                                      widget.imageUrl,
                                       fit: BoxFit.cover,
-                                      height: 150.h,
-                                      width: double.infinity,
-                                    );
-                                  },
-                                )
-                                : Image.asset(
-                                  'assets/images/product_placeholder.png',
-                                  fit: BoxFit.cover,
-                                  height: 150.h,
-                                  width: double.infinity,
-                                ),
+                                      loadingBuilder: (
+                                        context,
+                                        child,
+                                        loadingProgress,
+                                      ) {
+                                        if (loadingProgress == null)
+                                          return child;
+                                        return _buildShimmerLoader();
+                                      },
+                                      errorBuilder: (
+                                        context,
+                                        error,
+                                        stackTrace,
+                                      ) {
+                                        return _buildPlaceholderImage();
+                                      },
+                                    )
+                                    : _buildPlaceholderImage())
+                                : _buildPlaceholderImage(),
                       ),
                     ),
-
                     if (hasDiscount)
                       Positioned(
                         top: 5.h,
@@ -149,8 +162,9 @@ class _ProductContainerState extends State<ProductContainer> {
                             child: Center(
                               child: GestureDetector(
                                 onTap: () {
-                                  cubit.toggleFavorite(product);
-                                  setState(() {});
+                                  context.read<FavoriteCubit>().toggleFavorite(
+                                    widget.product,
+                                  );
                                 },
                                 child: Icon(
                                   isFav
@@ -248,8 +262,6 @@ class _ProductContainerState extends State<ProductContainer> {
                       ],
                     ),
                 Spacer(flex: 4),
-
-                // SizedBox(height: 5.h),
                 AppButton(
                   btnText: 'تحديد أحد الخيارات',
                   fontSize: 9,
@@ -262,6 +274,29 @@ class _ProductContainerState extends State<ProductContainer> {
           ),
         ),
       ),
+    );
+  }
+
+  // Shimmer Loader for Image
+  Widget _buildShimmerLoader() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey.shade300,
+      highlightColor: Colors.grey.shade100,
+      child: Container(
+        color: Colors.white,
+        height: 150.h,
+        width: double.infinity,
+      ),
+    );
+  }
+
+  // Placeholder Image when no network
+  Widget _buildPlaceholderImage() {
+    return Image.asset(
+      'assets/images/product_placeholder.png',
+      fit: BoxFit.cover,
+      height: 150.h,
+      width: double.infinity,
     );
   }
 }

@@ -10,6 +10,7 @@ import 'package:angelina_app/features/product_details/presentation/view/product_
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'dart:io'; // Import dart:io for HttpClient
 
 class CartItemWidget extends StatefulWidget {
   final int itemIndex;
@@ -21,10 +22,33 @@ class CartItemWidget extends StatefulWidget {
 }
 
 class _CartItemWidgetState extends State<CartItemWidget> {
+  bool _isConnected = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkNetworkConnection();
+  }
+
+  // Check if the device is connected to the internet
+  Future<void> _checkNetworkConnection() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        setState(() {
+          _isConnected = true;
+        });
+      }
+    } catch (_) {
+      setState(() {
+        _isConnected = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final cartCubit = context.read<CartCubit>();
-    // final favoriteCubit = context.read<FavoriteCubit>();
     final item = (cartCubit.state as CartLoaded).items[widget.itemIndex];
 
     final productModel = ProductModel(
@@ -49,7 +73,6 @@ class _CartItemWidgetState extends State<CartItemWidget> {
       child: Stack(
         children: [
           Container(
-            // height: 140.h,
             height: 0.16.sh,
             width: double.infinity,
             decoration: BoxDecoration(
@@ -85,7 +108,12 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                           image: DecorationImage(
                             image:
                                 item.imageUrls.isNotEmpty
-                                    ? NetworkImage(item.imageUrls.first)
+                                    ? (_isConnected
+                                        ? NetworkImage(item.imageUrls.first)
+                                        : const AssetImage(
+                                              'assets/images/product_placeholder.png',
+                                            )
+                                            as ImageProvider)
                                     : const AssetImage(
                                           'assets/images/product_placeholder.png',
                                         )
@@ -137,39 +165,6 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                         },
                       ),
                     ),
-                    /*
-                     Positioned(
-                      top: 5.h,
-                      right: 5.w,
-                      child: BlocBuilder<FavoriteCubit, FavoriteState>(
-                        builder: (context, favState) {
-                          final isFavorite = context
-                              .read<FavoriteCubit>()
-                              .isFavorite(productModel);
-                          return CircleAvatar(
-                            backgroundColor: Colors.white.withOpacity(0.8),
-                            radius: 15.r,
-                            child: IconButton(
-                              padding: EdgeInsets.zero,
-                              icon: Icon(
-                                isFavorite
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                color: AppColors.primaryColor,
-                                size: 18.sp,
-                              ),
-                              onPressed: () {
-                                context.read<FavoriteCubit>().toggleFavorite(
-                                  productModel,
-                                );
-                                setState(() {});
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    */
                   ],
                 ),
                 Expanded(
@@ -209,7 +204,6 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                                   title: 'ر.س',
                                   fontSize: 13.6,
                                   color: AppColors.primaryColor,
-
                                   fontWeight: FontWeight.w700,
                                 ),
                               ],
